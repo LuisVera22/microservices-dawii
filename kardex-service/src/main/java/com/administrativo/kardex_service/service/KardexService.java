@@ -1,0 +1,44 @@
+package com.administrativo.kardex_service.service;
+
+import com.administrativo.kardex_service.entity.Kardex;
+import com.administrativo.kardex_service.repository.KardexRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
+
+@Service
+public class KardexService {
+
+    @Autowired
+    KardexRepository kardexRepo;
+
+    public Kardex save(Kardex car) {
+        return kardexRepo.save(car);
+    }
+
+    public List<Kardex> getAll() {
+        return kardexRepo.findAll();
+    }
+
+    public List<Kardex> getByIdProducto(int idProducto) {
+        return kardexRepo.findByIdProducto(idProducto);
+    }
+
+    public List<Kardex> getByIdUsuario(int idUsuario) {
+        return kardexRepo.findByIdUsuario(idUsuario);
+    }
+
+    public List<Kardex> getByFecha(LocalDate fecha) {
+        LocalDateTime inicioDelDia = fecha.atStartOfDay();
+        LocalDateTime finDelDia = fecha.atTime(LocalTime.MAX);
+        return kardexRepo.findByFechaBetween(inicioDelDia, finDelDia);
+    }
+
+    public List<Kardex> getByTipoMovimiento(String tipoMovimiento) {
+        return kardexRepo.findByTipoMovimiento(tipoMovimiento);
+    }
+}
