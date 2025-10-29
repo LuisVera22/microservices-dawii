@@ -28,14 +28,12 @@ public class KardexService {
         return kardexRepo.findByIdProducto(idProducto);
     }
 
-    public List<Kardex> getByIdUsuario(int idUsuario) {
-        return kardexRepo.findByIdUsuario(idUsuario);
-    }
+
 
     public List<Kardex> getByFecha(LocalDate fecha) {
         LocalDateTime inicioDelDia = fecha.atStartOfDay();
         LocalDateTime finDelDia = fecha.atTime(LocalTime.MAX);
-        return kardexRepo.findByFechaBetween(inicioDelDia, finDelDia);
+        return kardexRepo.findByFechaMovimientoBetween(inicioDelDia, finDelDia);
     }
 
     public List<Kardex> getByTipoMovimiento(String tipoMovimiento) {
