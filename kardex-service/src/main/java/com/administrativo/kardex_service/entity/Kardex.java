@@ -2,7 +2,7 @@ package com.administrativo.kardex_service.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "movimientos_inventario")
@@ -15,21 +15,31 @@ public class Kardex {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id_movimiento;
+    @Column(name = "id_movimiento")
+    private Integer idMovimiento;
 
+    @Column(name = "id_producto")
     private Integer idProducto;
+
+    @Column(name = "tipo_movimiento")
     private String tipoMovimiento;
+
     private Integer cantidad;
+
+    @Column(name = "stock_anterior")
     private Integer stockAnterior;
+
+    @Column(name = "stock_nuevo")
     private Integer stockNuevo;
 
-    @Column(
-            name = "fechaMovimiento",
-            columnDefinition = "timestamp default current_timestamp",
-            insertable = false,
-            updatable = false
-    )
-    private LocalDateTime fechaMovimiento;
+    // 👇 CORRECTO: el nombre real de la columna es "fecha"
+    @Column(name = "fecha", insertable = false, updatable = false)
+    private Timestamp fecha;
 
-    private Integer referenciaId; // por ejemplo: id de la venta
+    @Column(name = "referencia_id")
+    private Integer referenciaId;
+
+    // ⚠️ Opcional: si tu tabla tiene id_usuario
+    @Column(name = "id_usuario")
+    private Integer idUsuario;
 }

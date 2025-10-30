@@ -5,6 +5,7 @@ import com.administrativo.kardex_service.repository.KardexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -31,9 +32,14 @@ public class KardexService {
 
 
     public List<Kardex> getByFecha(LocalDate fecha) {
+        // 🔹 Convertimos LocalDate a Timestamp
         LocalDateTime inicioDelDia = fecha.atStartOfDay();
         LocalDateTime finDelDia = fecha.atTime(LocalTime.MAX);
-        return kardexRepo.findByFechaMovimientoBetween(inicioDelDia, finDelDia);
+
+        Timestamp inicioTimestamp = Timestamp.valueOf(inicioDelDia);
+        Timestamp finTimestamp = Timestamp.valueOf(finDelDia);
+
+        return kardexRepo.findByFechaBetween(inicioTimestamp, finTimestamp);
     }
 
     public List<Kardex> getByTipoMovimiento(String tipoMovimiento) {
